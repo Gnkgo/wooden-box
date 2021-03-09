@@ -4,9 +4,7 @@ import java.util.Arrays;
 
 public class coordinateSystem {
     public int[][][] coordinate = new int[51][36][26];
-    public int xNumberl;
-    public int yNumberl;
-    public int zNumberl;
+
     /*
     height = z
     length = y
@@ -63,18 +61,6 @@ public class coordinateSystem {
         }
         return coordinate;
     }
-
-        //coordinate [x][y][z]
-        /*
-        for (int i = 0; i < Boxes[j].getWidth(); i++) {
-            coordinate [i][y][z] = -1;
-            for (int h = 0; j < Boxes[h].getLength(); h++) {
-                coordinate [x][h][z] = -1;
-            }
-                for (int k = 0; k < Boxes[j].getHeight(); k++) {
-                    coordinate [x][y][k] = -1;
-                }
-         */
             /*
             exception when array is too short,
             then this combination doesn't work,
@@ -94,11 +80,6 @@ public class coordinateSystem {
         };
         return rightTopCorner;
     }
-        /*
-        xNumberr += Boxes [j].getWidth();
-        yNumberr += Boxes [j].getLength();
-        zNumberr += Boxes [j].getHeight();
-         */
 
     //one method? getLeftCorner and getRightCorner? Mapping? Pair?
 
