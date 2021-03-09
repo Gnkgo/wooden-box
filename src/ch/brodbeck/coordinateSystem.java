@@ -1,9 +1,13 @@
 package ch.brodbeck;
 
 public class coordinateSystem {
-    public int[] xAxis = new int[51];
-    public int[] yAxis = new int[36];
-    public int[] zAxis = new int[26];
+    public int[][][] coordinate = new int[51][36][26];
+    public int xNumberl;
+    public int yNumberl;
+    public int zNumberl;
+    public int xNumberr;
+    public int yNumberr;
+    public int zNumberr;
     /*
     height = z
     length = y
@@ -33,47 +37,78 @@ public class coordinateSystem {
     public void boxLeft() {
     }
 
-    public boolean checkCollision(int x, int y, int z) {
-        return xAxis[x] != -1 || yAxis[y] != -1 || zAxis[z] != -1;
+    public boolean checkCollision(int givenX, int givenY, int givenZ, int givenJ, int x, int y, int z, int j) {
+
+        if ((getLeftCorner(x, y, z)[0] > getLeftCorner(givenX, givenY, givenZ)[0]) &&
+                (getLeftCorner(x, y, z)[0]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[0])) {
+            return false;
+        } else if ((getLeftCorner(x, y, z)[1] > getLeftCorner(givenX, givenY, givenZ)[1]) &&
+                (getLeftCorner(x, y, z)[1]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[1])) {
+            return false;
+        } else if ((getLeftCorner(x, y, z)[2] > getLeftCorner(givenX, givenY, givenZ)[2]) &&
+                (getLeftCorner(x, y, z)[2]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[2])) {
+            return false;
+        }else if ((getRightCorner(x, y, z, j)[0] > getLeftCorner(givenX, givenY, givenZ)[0]) &&
+                (getRightCorner(x, y, z, j)[0]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[0])) {
+            return false;
+        } else if ((getLeftCorner(x, y, z)[1] > getLeftCorner(givenX, givenY, givenZ)[1]) &&
+                (getRightCorner(x, y, z, j)[1]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[1])) {
+            return false;
+        } else if ((getLeftCorner(x, y, z)[2] > getLeftCorner(givenX, givenY, givenZ)[2]) &&
+                (getRightCorner(x, y, z, j)[2]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[2])) {
+            return false;
+        } else {
+            return true;
+        }
         //get collision with corners of the box
     }
 
     public void placeBox(int x, int y, int z, int j){
-        setPosition(x, y, z);
-        checkCollision(x, y, z);
+        getRightCorner(x, y, z, j)[0] = xNumberl;
+        checkCollision(x, y, z, j);
+        coordinate [x][y][z]
         for (int i = 0; i < Boxes[j].getWidth(); i++) {
-            xAxis [x] = -1;
+            coordinate [i][y][z] = -1;
+            for (int h = 0; j < Boxes[h].getLength(); h++) {
+                coordinate [x][h][z] = -1;
+            }
+                for (int k = 0; k < Boxes[j].getHeight(); k++) {
+                    coordinate [x][y][k] = -1;
+                }
             /*
             exception when array is too short,
             then this combination doesn't work,
             either rotate Box or choose another combination
              */
+
+
         }
-        for (int i = 0; i < Boxes[j].getLength(); i++) {
-            yAxis [x] = -1;
-        }
-        for (int i = 0; i < Boxes[j].getHeight(); i++) {
-            zAxis [x] = -1;
-        }
+
+    }
+    public int[] getLeftCorner(int x, int y, int z) {
+        xNumberl = x;
+        yNumberl = y;
+        zNumberl = z;
+        return new int[]{x, y, z};
     }
 
-    public void getLeftCorner(int x, int y, int z) {
-        setPosition(x, y, z);
-        int[] leftBottomCorner = {xAxis [x], yAxis [y], xAxis [y],};
-        }
-
-    public void getRightCorner(int x, int y, int z, int j) {
+    public int[] getRightCorner(int x, int y, int z, int j) {
         int[] rightTopCorner = {
-                xAxis [x] + Boxes [j].getWidth(),
-                yAxis [y] + Boxes [j].getLength(),
-                xAxis [y] + Boxes [j].getHeight(),
+                coordinate
+                        [x + Boxes [j].getWidth()]
+                        [y + Boxes [j].getLength()]
+                        [z + Boxes [j].getHeight()]
         };
+        /*
+        xNumberr += Boxes [j].getWidth();
+        yNumberr += Boxes [j].getLength();
+        zNumberr += Boxes [j].getHeight();
+         */
+        return rightTopCorner;
     }//one method? getLeftCorner and getRightCorner? Mapping? Pair?
 
     public void setPosition(int x, int y, int z) {
-        xAxis [x] = -1;
-        yAxis [y] = -1;
-        zAxis [z] = -1;
+        coordinate [x][y][z] = -1;
     }
 
     public void rotateLengthWidth(int length, int width) {
