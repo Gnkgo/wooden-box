@@ -1,6 +1,7 @@
 package ch.brodbeck;
-
+import java.util.Scanner;
 import java.util.Arrays;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class coordinateSystem {
     public int[][][] coordinate = new int[51][36][26];
@@ -32,6 +33,8 @@ public class coordinateSystem {
     }
 
     public void boxLeft() {
+        int index = ArrayUtils.indexOf(numbers, element);
+
     }
 
     public boolean checkCollision(int givenX, int givenY, int givenZ, int givenJ, int x, int y, int z, int j) {
@@ -56,7 +59,7 @@ public class coordinateSystem {
         //checkCollision(x, y, z, j);
         for (int[][] row : coordinate) {
             for (int[] column : row) {
-                Arrays.fill(column, -1);
+                Arrays.fill(column, j); //fill the numbers in so you can see which box is used
             }
         }
         return coordinate;
