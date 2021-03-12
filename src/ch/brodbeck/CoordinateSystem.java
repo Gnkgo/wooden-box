@@ -1,10 +1,8 @@
 package ch.brodbeck;
-import java.util.Scanner;
 import java.util.Arrays;
-import org.apache.commons.lang3.ArrayUtils;
 
-public class coordinateSystem {
-    public int[][][] coordinate = new int[51][36][26];
+public class CoordinateSystem {
+    public int[][][] coordinate = new int[50][35][25];
 
     /*
     height = z
@@ -33,20 +31,25 @@ public class coordinateSystem {
     }
 
     public void boxLeft() {
-        int index = ArrayUtils.indexOf(numbers, element);
+        //int index = ArrayUtils.indexOf(numbers, element);
 
     }
 
-    public boolean checkCollision(int givenX, int givenY, int givenZ, int givenJ, int x, int y, int z, int j) {
+    public boolean checkCollision(int givenX, int givenY, int givenZ, int givenBoxID, int x, int y, int z, int boxID) {
+        int[] pointLeft = getLeftCorner(x, y, z);
+        int[] givenPointLeft = getLeftCorner(givenX, givenY, givenZ);
+        int[] pointRight = getRightCorner(x, y, z, boxID);
+        int[] givenPointRight = getRightCorner(givenX, givenY, givenZ, givenBoxID);
+
         for (int i = 0; i<3; i++ ) {
-            if ((getLeftCorner(x, y, z)[i] > getLeftCorner(givenX, givenY, givenZ)[i]) &&
-                    (getLeftCorner(x, y, z)[i]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[i])) {
+            if ((pointLeft[i] > givenPointLeft[i]) ||
+                    pointLeft[i] < pointRight[i]) {
                 return false;
             }
         }
-        for (int k = 0; k<3; k++ ) {
-            if ((getRightCorner(x, y, z, j)[k] > getLeftCorner(givenX, givenY, givenZ)[k]) &&
-                    (getRightCorner(x, y, z, j)[k]) < (getRightCorner(givenX, givenY, givenZ, givenJ)[k])) {
+        for (int j = 0; j<3; j++ ) {
+            if ((pointRight[j] > givenPointLeft[j]) ||
+                    (pointRight[j] < givenPointRight[j])) {
                 return false;
             }
         }
@@ -55,11 +58,11 @@ public class coordinateSystem {
     }
 
 
-    public int[][][] placeBox(int x, int y, int z, int j) {
-        //checkCollision(x, y, z, j);
+    public int[][][] placeBox(int givenX, int givenY, int givenZ, int givenBoxID, int x, int y, int z, int boxID) {
+        checkCollision(givenX, givenY, givenZ, givenBoxID, x, y, z, boxID);
         for (int[][] row : coordinate) {
             for (int[] column : row) {
-                Arrays.fill(column, j); //fill the numbers in so you can see which box is used
+                Arrays.fill(column, boxID); //fill the numbers in so you can see which box is used
             }
         }
         return coordinate;
@@ -74,19 +77,17 @@ public class coordinateSystem {
         return new int[]{x, y, z};
     }
 
-    public int[] getRightCorner(int x, int y, int z, int j) {
+    public int[] getRightCorner(int x, int y, int z, int boxID) {
         int[] rightTopCorner = {
                 coordinate
-                        [x + Boxes[j].getWidth()]
-                        [y + Boxes[j].getLength()]
-                        [z + Boxes[j].getHeight()]
+                        [x + Boxes[boxID].getWidth()]
+                        [y + Boxes[boxID].getLength()]
+                        [z + Boxes[boxID].getHeight()]
         };
         return rightTopCorner;
     }
 
     //one method? getLeftCorner and getRightCorner? Mapping? Pair?
-
-
 
     public void rotateLengthWidth(int length, int width) {
         int a = width;
