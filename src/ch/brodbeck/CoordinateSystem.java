@@ -27,11 +27,19 @@ public class CoordinateSystem {
             new Box(35, 20, 10),
     };
 
+    public CoordinateSystem() {
+        for (int[][] row : coordinate) {
+            for (int[] column : row) {
+                Arrays.fill(column, -1);
+            }
+        }
+    }
     public void checkPossibility() {
     }
 
     public void boxLeft() {
         //int index = ArrayUtils.indexOf(numbers, element);
+
 
     }
 
@@ -41,15 +49,18 @@ public class CoordinateSystem {
         int[] pointRight = getRightCorner(x, y, z, boxID);
         int[] givenPointRight = getRightCorner(givenX, givenY, givenZ, givenBoxID);
 
+        if (givenBoxID == boxID) {
+            return false;
+        }
+
         for (int i = 0; i<3; i++ ) {
-            if ((pointLeft[i] > givenPointLeft[i]) ||
-                    pointLeft[i] < pointRight[i]) {
+            if ((pointLeft[i] > givenPointLeft[i]) &&
+                    pointLeft[i] < givenPointRight[i]) {
                 return false;
             }
         }
         for (int j = 0; j<3; j++ ) {
-            if ((pointRight[j] > givenPointLeft[j]) ||
-                    (pointRight[j] < givenPointRight[j])) {
+            if (pointRight[j] < givenPointRight[j]) {
                 return false;
             }
         }
@@ -78,12 +89,11 @@ public class CoordinateSystem {
     }
 
     public int[] getRightCorner(int x, int y, int z, int boxID) {
-        int[] rightTopCorner = {
-                coordinate
-                        [x + Boxes[boxID].getWidth()]
-                        [y + Boxes[boxID].getLength()]
-                        [z + Boxes[boxID].getHeight()]
-        };
+        int[] rightTopCorner =
+                        { x + Boxes[boxID].getWidth(),
+                        y + Boxes[boxID].getLength(),
+                        z + Boxes[boxID].getHeight()};
+
         return rightTopCorner;
     }
 
