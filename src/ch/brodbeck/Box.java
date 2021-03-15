@@ -3,9 +3,9 @@ package ch.brodbeck;
 //import java.lang.annotation.Target;
 
 public class Box {
-    private int length; //attribute
-    private int width;
-    private int height;
+    public int length; //attribute
+    public int width;
+    public int height;
 
     public Box(int length, int width, int height) {
         this.length = length;
