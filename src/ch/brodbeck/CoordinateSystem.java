@@ -73,16 +73,20 @@ public class CoordinateSystem {
     }
 
     public int[][][] placeBox(int x, int y, int z, int boxID) {
-        for (int i = x; i < x + Boxes[boxID].length; ++i) {
+        for (int i = z; i < Boxes[boxID].height; ++i) {
             coordinate[i][y][z] = boxID;
-        }
-            for(int j = y; j < y + Boxes[boxID].width; ++j) {
-                coordinate[x][j][z] = boxID;
+
+            for (int j = y; j < y + Boxes[boxID].length; ++j) {
+                coordinate[i][j][z] = boxID;
+
+                for (int k = x; k < x + Boxes[boxID].width; ++k) {
+                     coordinate[i][j][k] = boxID;
             }
-                for(int k = z; k < Boxes[boxID].height; ++k){
-                    coordinate[x][y][k] = boxID;
-                }
+        }
+    }
         //checkCollision(givenX, givenY, givenZ, givenBoxID, x, y, z, boxID);
+        System.out.println(coordinate[x][y][z]);
+        System.out.println(coordinate[x+1][y+1][z+1]);
         return coordinate;
     }
             /*
