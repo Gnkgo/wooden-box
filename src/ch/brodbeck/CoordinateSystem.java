@@ -35,7 +35,42 @@ public class CoordinateSystem {
             }
         }
     }
-    public void checkPossibility() {
+
+    public void traceBackAlgorithm() {
+    }
+
+    public boolean checkSpacesWithBoxID(int boxID) {
+        return (emptySpacesCount()[0] > Boxes[boxID].width) &&
+                (emptySpacesCount()[1] > Boxes[boxID].length) &&
+                (emptySpacesCount()[2] > Boxes[boxID].height);
+    }
+
+    public int[] emptySpacesCount() {
+        int[] spaces = new int[3];
+        int xCounter = 0;
+        int yCounter = 0;
+        int zCounter = 0;
+        for (int i = 0; i < coordinate.length; ++i) {
+            if (coordinate[i][0][0] == -1) {
+                zCounter++;
+            }
+
+            for (int j = 0; j < coordinate[j].length; ++j) {
+                if (coordinate[i][j][0] == -1) {
+                    yCounter++;
+                }
+
+                for (int k = 0; k < coordinate[i][j].length; ++k) {
+                    if (coordinate[i][j][k] == -1) {
+                        xCounter++;
+                    }
+                }
+            }
+        }
+        spaces[0] = xCounter;
+        spaces[1] = yCounter;
+        spaces[2] = zCounter;
+        return spaces;
     }
 
     public void boxLeft() {
@@ -73,7 +108,7 @@ public class CoordinateSystem {
     }
 
     public int[][][] placeBox(int x, int y, int z, int boxID) {
-        for (int i = z; i < Boxes[boxID].height; ++i) {
+        for (int i = z; i < z + Boxes[boxID].height; ++i) {
             coordinate[i][y][z] = boxID;
 
             for (int j = y; j < y + Boxes[boxID].length; ++j) {
