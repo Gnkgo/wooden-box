@@ -12,6 +12,8 @@ public class CollisionTest {
         Assert.assertFalse(coordinateSystem.checkCollision(0, 0, 0, 0, 6, 12, 2, 1));
         Assert.assertFalse(coordinateSystem.checkCollision(0, 0, 0, 1, 6, 4, 3, 1));
 
+        Assert.assertFalse(coordinateSystem.checkCollision(7, 0, 0, 0, 6, 3, 0, 1));
+        Assert.assertTrue(coordinateSystem.checkCollision(7, 0, 0, 0, 6, 2, 0, 1));
     }
 
 }
