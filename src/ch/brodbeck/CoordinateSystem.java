@@ -86,46 +86,38 @@ public class CoordinateSystem {
         int[] givenPointRight = getRightCorner(givenX, givenY, givenZ, givenBoxID);
 
         if (givenBoxID == boxID) {
-            return false;
+            return true;
         }
+        // try to use the whole coordination as "one" --> then use <> signs
+
+        if ((pointLeft[0] > givenPointLeft[0]) &&
+        (pointLeft[1] > givenPointLeft[1]) &&
+                (pointLeft[2] > givenPointLeft[2])) {
+            if ((pointLeft[0] > givenPointRight[0]) &&
+                    (pointLeft[1] > givenPointRight[1]) &&
+                    (pointLeft[2] > givenPointRight[2])) {
+                return false;
+            }
+        }
+
+        
 
         for (int i = 0; i < 3; i++) {
             if (i == 2) {
-                if (((pointLeft[i-2] > givenPointLeft[i-2]) && (
-                        pointLeft[i-2] < givenPointRight[i-2])) &&
+                return ((pointLeft[i - 2] > givenPointLeft[i - 2]) && (
+                        pointLeft[i - 2] < givenPointRight[i - 2])) &&
                         ((pointLeft[i] > givenPointLeft[i]) &&
-                                (pointLeft[i] < givenPointRight[i]))){
-                    return false;
-                }
+                                (pointLeft[i] < givenPointRight[i]));
             }
+
             if (((pointLeft[i] > givenPointLeft[i]) && (
                     pointLeft[i] < givenPointRight[i])) &&
-                    ((pointLeft[i+1] > givenPointLeft[i+1]) &&
-                            (pointLeft[i+1] < givenPointRight[i+1]))){
-                return false;
+                    ((pointLeft[i + 1] > givenPointLeft[i + 1]) &&
+                            (pointLeft[i + 1] < givenPointRight[i + 1]))) {
+                return true;
             }
         }
-        for (int j = 0; j < 3; j++) {
-            if ((pointRight[j] < givenPointRight[j]) &&
-                    (pointRight[j] > givenPointLeft[j])) {
-                return false;
-            }
-        }
-
-        for (int k = 0; k < 3; k++) {
-            if ((givenPointLeft[k] > pointLeft[k]) && (
-                    givenPointLeft[k] < pointRight[k])) {
-                return false;
-            }
-            //get collision with corners of the box
-        }
-        for (int l = 0; l < 3; l++) {
-            if ((givenPointRight[l] < pointRight[l]) && (
-                    givenPointRight[l] > pointLeft[l])) {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     public int[][][] placeBox(int x, int y, int z, int boxID) {
