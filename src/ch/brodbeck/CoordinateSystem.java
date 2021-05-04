@@ -1,5 +1,7 @@
 package ch.brodbeck;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CoordinateSystem {
     public int[][][] coordinate = new int[10][7][5];
@@ -50,18 +52,18 @@ public class CoordinateSystem {
         int xCounter = 0;
         int yCounter = 0;
         int zCounter = 0;
-        for (int i = 0; i < coordinate.length; ++i) {
-            if (coordinate[i][0][0] == -1) {
+        for (int[][] ints : coordinate) {
+            if (ints[0][0] == -1) {
                 zCounter++;
             }
 
             for (int j = 0; j < coordinate[j].length; ++j) {
-                if (coordinate[i][j][0] == -1) {
+                if (ints[j][0] == -1) {
                     yCounter++;
                 }
 
-                for (int k = 0; k < coordinate[i][j].length; ++k) {
-                    if (coordinate[i][j][k] == -1) {
+                for (int k = 0; k < ints[j].length; ++k) {
+                    if (ints[j][k] == -1) {
                         xCounter++;
                     }
                 }
@@ -83,28 +85,47 @@ public class CoordinateSystem {
         int[] pointRight = getRightCorner(x, y, z, boxID);
         int[] givenPointRight = getRightCorner(givenX, givenY, givenZ, givenBoxID);
 
-        if ((givenX + x > 10) || (givenY + y > 7) || (givenZ + z > 5)) {
-            return false;
-        }
-
         if (givenBoxID == boxID) {
             return false;
         }
 
-        for (int i = 0; i<3; i++ ) {
-            if ((pointLeft[i] > givenPointLeft[i]) && (
-                    pointLeft[i] < givenPointRight[i])) {
+        for (int i = 0; i < 3; i++) {
+            if (i == 2) {
+                if (((pointLeft[i-2] > givenPointLeft[i-2]) && (
+                        pointLeft[i-2] < givenPointRight[i-2])) &&
+                        ((pointLeft[i] > givenPointLeft[i]) &&
+                                (pointLeft[i] < givenPointRight[i]))){
+                    return false;
+                }
+            }
+            if (((pointLeft[i] > givenPointLeft[i]) && (
+                    pointLeft[i] < givenPointRight[i])) &&
+                    ((pointLeft[i+1] > givenPointLeft[i+1]) &&
+                            (pointLeft[i+1] < givenPointRight[i+1]))){
                 return false;
             }
         }
-        for (int j = 0; j<3; j++ ) {
+        for (int j = 0; j < 3; j++) {
             if ((pointRight[j] < givenPointRight[j]) &&
-                    (pointRight[j] > givenPointLeft[j])){
+                    (pointRight[j] > givenPointLeft[j])) {
+                return false;
+            }
+        }
+
+        for (int k = 0; k < 3; k++) {
+            if ((givenPointLeft[k] > pointLeft[k]) && (
+                    givenPointLeft[k] < pointRight[k])) {
+                return false;
+            }
+            //get collision with corners of the box
+        }
+        for (int l = 0; l < 3; l++) {
+            if ((givenPointRight[l] < pointRight[l]) && (
+                    givenPointRight[l] > pointLeft[l])) {
                 return false;
             }
         }
         return true;
-        //get collision with corners of the box
     }
 
     public int[][][] placeBox(int x, int y, int z, int boxID) {
@@ -169,23 +190,16 @@ public class CoordinateSystem {
     }
 
     // set --> add
-    public void rotateLengthWidth(int length, int width) {
-        int a = width;
-        width = length;
-        length = a;
-    }
-
-    public void rotateLengthHeight(int length, int height) {
-        int a = height;
-        height = length;
-        length = a;
-    }
-
-    public void rotateHeightWidth(int height, int width) {
-        int a = height;
-        height = width;
-        width = a;
-
+    public Set rotateLengthWidth(int length, int width, int height) {
+        Set <Box> hash_Set = new HashSet <Box>  ();
+        for (int i = 0; i < 6 ; i++) {
+            int a = height;
+            height = length;
+            length = a;
+            Box rotatedBox = new Box(length, width, height);
+            hash_Set.add(rotatedBox);
+        }
+        return hash_Set;
     }
 }
 
