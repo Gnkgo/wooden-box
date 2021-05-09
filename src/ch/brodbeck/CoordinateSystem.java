@@ -100,24 +100,36 @@ public class CoordinateSystem {
             }
         }
 
-        
-
-        for (int i = 0; i < 3; i++) {
-            if (i == 2) {
-                return ((pointLeft[i - 2] > givenPointLeft[i - 2]) && (
-                        pointLeft[i - 2] < givenPointRight[i - 2])) &&
-                        ((pointLeft[i] > givenPointLeft[i]) &&
-                                (pointLeft[i] < givenPointRight[i]));
-            }
-
-            if (((pointLeft[i] > givenPointLeft[i]) && (
-                    pointLeft[i] < givenPointRight[i])) &&
-                    ((pointLeft[i + 1] > givenPointLeft[i + 1]) &&
-                            (pointLeft[i + 1] < givenPointRight[i + 1]))) {
-                return true;
+        if ((pointRight[0] > givenPointLeft[0]) &&
+                (pointLeft[1] > givenPointLeft[1]) &&
+                (pointLeft[2] > givenPointLeft[2])) {
+            if ((pointLeft[0] > givenPointRight[0]) &&
+                    (pointLeft[1] > givenPointRight[1]) &&
+                    (pointLeft[2] > givenPointRight[2])) {
+                return false;
             }
         }
-        return false;
+
+        if ((pointLeft[0] > givenPointLeft[0]) &&
+                (pointLeft[1] > givenPointLeft[1]) &&
+                (pointLeft[2] > givenPointLeft[2])) {
+            if ((pointLeft[0] > givenPointRight[0]) &&
+                    (pointLeft[1] > givenPointRight[1]) &&
+                    (pointLeft[2] > givenPointRight[2])) {
+                return false;
+            }
+        }
+
+        if ((pointLeft[0] > givenPointLeft[0]) &&
+                (pointLeft[1] > givenPointLeft[1]) &&
+                (pointLeft[2] > givenPointLeft[2])) {
+            if ((pointLeft[0] > givenPointRight[0]) &&
+                    (pointLeft[1] > givenPointRight[1]) &&
+                    (pointLeft[2] > givenPointRight[2])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int[][][] placeBox(int x, int y, int z, int boxID) {
@@ -182,16 +194,16 @@ public class CoordinateSystem {
     }
 
     // set --> add
-    public Set rotateLengthWidth(int length, int width, int height) {
-        Set <Box> hash_Set = new HashSet <Box>  ();
-        for (int i = 0; i < 6 ; i++) {
-            int a = height;
-            height = length;
-            length = a;
-            Box rotatedBox = new Box(length, width, height);
-            hash_Set.add(rotatedBox);
-        }
-        return hash_Set;
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Set<Box> rotateBox(int length, int width, int height) {
+        Set<Box> hashSet = new HashSet<Box>();
+        hashSet.add(new Box(length, width, height));
+        hashSet.add(new Box(length, height, width));
+        hashSet.add(new Box(height, width, length));
+        hashSet.add(new Box(height, length, width));
+        hashSet.add(new Box(width, height, length));
+        hashSet.add(new Box(width, length, height));
+        return hashSet;
     }
 }
 
