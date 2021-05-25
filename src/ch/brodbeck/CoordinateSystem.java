@@ -3,15 +3,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CoordinateSystem {
-    public int[][][] coordinate = new int[10][7][5];
-
+public class CoordinateSystem extends Collision {
+    public static int[][][] coordinate = new int[10][7][5];
     /*
     height = z
     length = y
     width = x
      */
-
     public static Box TargetBox = new Box(10, 7, 5);
     public static Box[] Boxes = new Box[] {
             // Cubes
@@ -36,174 +34,6 @@ public class CoordinateSystem {
                 Arrays.fill(column, -1);
             }
         }
-    }
-
-    public void traceBackAlgorithm() {
-    }
-
-    public boolean checkSpacesWithBoxID(int boxID) {
-        return (emptySpacesCount()[0] > Boxes[boxID].width) &&
-                (emptySpacesCount()[1] > Boxes[boxID].length) &&
-                (emptySpacesCount()[2] > Boxes[boxID].height);
-    }
-
-    public int[] emptySpacesCount() {
-        int[] spaces = new int[3];
-        int xCounter = 0;
-        int yCounter = 0;
-        int zCounter = 0;
-        for (int[][] ints : coordinate) {
-            if (ints[0][0] == -1) {
-                zCounter++;
-            }
-
-            for (int j = 0; j < coordinate[j].length; ++j) {
-                if (ints[j][0] == -1) {
-                    yCounter++;
-                }
-
-                for (int k = 0; k < ints[j].length; ++k) {
-                    if (ints[j][k] == -1) {
-                        xCounter++;
-                    }
-                }
-            }
-        }
-        spaces[0] = xCounter;
-        spaces[1] = yCounter;
-        spaces[2] = zCounter;
-        return spaces;
-    }
-
-    public void boxLeft() {
-        //int index = ArrayUtils.indexOf(numbers, element);
-    }
-
-    public boolean checkCollision(int givenX, int givenY, int givenZ, int givenBoxID, int x, int y, int z, int boxID) {
-        int[] pointLeft = getLeftCorner(x, y, z);
-        int[] givenPointLeft = getLeftCorner(givenX, givenY, givenZ);
-        int[] pointRight = getRightCorner(x, y, z, boxID);
-        int[] givenPointRight = getRightCorner(givenX, givenY, givenZ, givenBoxID);
-
-        if (givenBoxID == boxID) {
-            return true;
-        }
-        // try to use the whole coordination as "one" --> then use <> signs
-
-        if ((pointLeft[0] > givenPointLeft[0]) &&
-        (pointLeft[1] > givenPointLeft[1]) &&
-                (pointLeft[2] > givenPointLeft[2])) {
-            if ((pointLeft[0] > givenPointRight[0]) &&
-                    (pointLeft[1] > givenPointRight[1]) &&
-                    (pointLeft[2] > givenPointRight[2])) {
-                return false;
-            }
-        }
-
-        if ((pointRight[0] > givenPointLeft[0]) &&
-                (pointLeft[1] > givenPointLeft[1]) &&
-                (pointLeft[2] > givenPointLeft[2])) {
-            if ((pointLeft[0] > givenPointRight[0]) &&
-                    (pointLeft[1] > givenPointRight[1]) &&
-                    (pointLeft[2] > givenPointRight[2])) {
-                return false;
-            }
-        }
-
-        if ((pointLeft[0] > givenPointLeft[0]) &&
-                (pointLeft[1] > givenPointLeft[1]) &&
-                (pointLeft[2] > givenPointLeft[2])) {
-            if ((pointLeft[0] > givenPointRight[0]) &&
-                    (pointLeft[1] > givenPointRight[1]) &&
-                    (pointLeft[2] > givenPointRight[2])) {
-                return false;
-            }
-        }
-
-        if ((pointLeft[0] > givenPointLeft[0]) &&
-                (pointLeft[1] > givenPointLeft[1]) &&
-                (pointLeft[2] > givenPointLeft[2])) {
-            if ((pointLeft[0] > givenPointRight[0]) &&
-                    (pointLeft[1] > givenPointRight[1]) &&
-                    (pointLeft[2] > givenPointRight[2])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public int[][][] placeBox(int x, int y, int z, int boxID) {
-        for (int i = z; i < z + Boxes[boxID].height; ++i) {
-            coordinate[i][y][z] = boxID;
-
-            for (int j = y; j < y + Boxes[boxID].length; ++j) {
-                coordinate[i][j][z] = boxID;
-
-                for (int k = x; k < x + Boxes[boxID].width; ++k) {
-                     coordinate[i][j][k] = boxID;
-            }
-        }
-    }
-        //checkCollision(givenX, givenY, givenZ, givenBoxID, x, y, z, boxID);
-        System.out.println(coordinate[x][y][z]);
-        System.out.println(coordinate[x+1][y+1][z+1]);
-        return coordinate;
-    }
-            /*
-            exception when array is too short,
-            then this combination doesn't work,
-            either rotate Box or choose another combination
-             */
-
-    public int[][][] deleteBox(int boxID) {
-        for (int i = 0; i < coordinate.length; ++i) {
-            for(int j = 0; j < coordinate[i].length; ++j) {
-                for(int k = 0; k < coordinate[i][j].length; ++k) {
-                    if (coordinate[i][j][k] == boxID) {
-                        coordinate[i][j][k] = -1;
-                    }
-                }
-            }
-        }
-        return coordinate;
-    // use traceback algorithm --> fast way to achieve goal
-    }
-/*
-    public int[][][] deleteBox(int boxID) {
-        for (int[][] array2D: coordinate) {
-            for (int[] array1D: array2D) {
-                for(int item: array1D) {
-                    if (coordinate[array2D][array1D][item] == boxID) {
-                        coordinate[array2D][array1D][item] = -1;
-                    }
-                }
-            }
-        }
-        return coordinate;
-    }
- */
-
-    public int[] getLeftCorner(int x, int y, int z) {
-        return new int[]{x, y, z};
-    }
-
-    public int[] getRightCorner(int x, int y, int z, int boxID) {
-        return new int[] { x + Boxes[boxID].getWidth(),
-        y + Boxes[boxID].getLength(),
-        z + Boxes[boxID].getHeight()};
-    }
-
-    // set --> add
-    @SuppressWarnings("SuspiciousNameCombination")
-    public Set<Box> rotateBox(int length, int width, int height) {
-        Set<Box> hashSet = new HashSet<Box>();
-        hashSet.add(new Box(length, width, height));
-        hashSet.add(new Box(length, height, width));
-        hashSet.add(new Box(height, width, length));
-        hashSet.add(new Box(height, length, width));
-        hashSet.add(new Box(width, height, length));
-        hashSet.add(new Box(width, length, height));
-        return hashSet;
     }
 }
 

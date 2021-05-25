@@ -1,7 +1,5 @@
 package ch.brodbeck;
 
-//import java.lang.annotation.Target;
-
 public class Box {
     public int length; //attribute
     public int width;
@@ -18,9 +16,7 @@ public class Box {
     public int getLength() {
         return length;
     }
-    public int getWidth() {
-        return width;
-    }
+    public int getWidth() { return width; }
     public int getHeight() {
         return height;
     }
