@@ -11,8 +11,16 @@ public class PositionedBox {
     }
 
     public boolean collidesWith(PositionedBox other) {
-        // TODO: Implement code here
-        return false;
-    }
+        int givenMaxX = position.getX() + box.getWidth();
+        int givenMaxY = position.getY() + box.getLength();
+        int givenMaxZ = position.getZ() + box.getHeight();
 
+        int maxX = other.position.getX() + other.box.getWidth();
+        int maxY = other.position.getY() + other.box.getLength();
+        int maxZ = other.position.getZ() + other.box.getHeight();
+
+        return (position.getX() < maxX && givenMaxX > other.position.getX()) &&
+                (position.getY() < maxY && givenMaxY > other.position.getY()) &&
+                (position.getZ() < maxZ && givenMaxZ > other.position.getZ());
+    }
 }
