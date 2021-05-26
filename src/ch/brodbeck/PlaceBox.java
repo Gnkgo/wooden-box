@@ -4,13 +4,13 @@ import static ch.brodbeck.CoordinateSystem.coordinate;
 
 public class PlaceBox extends DeleteBox{
     public int[][][] placeBox(int x, int y, int z, int boxID) {
-        for (int i = z; i < z + Boxes[boxID].height; ++i) {
+        for (int i = z; i < z + Boxes[boxID].getHeight(); ++i) {
             coordinate[i][y][z] = boxID;
 
-            for (int j = y; j < y + Boxes[boxID].length; ++j) {
+            for (int j = y; j < y + Boxes[boxID].getLength(); ++j) {
                 coordinate[i][j][z] = boxID;
 
-                for (int k = x; k < x + Boxes[boxID].width; ++k) {
+                for (int k = x; k < x + Boxes[boxID].getWidth(); ++k) {
                     coordinate[i][j][k] = boxID;
                 }
             }

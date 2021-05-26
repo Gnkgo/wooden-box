@@ -1,5 +1,6 @@
 package ch.brodbeck;
 
+import ch.brodbeck.solver.Box;
 import org.junit.Assert;
 import org.junit.Test;
 

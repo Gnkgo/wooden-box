@@ -1,5 +1,7 @@
 package ch.brodbeck;
 
+import ch.brodbeck.solver.Box;
+
 import java.util.HashSet;
 import java.util.Set;
 
