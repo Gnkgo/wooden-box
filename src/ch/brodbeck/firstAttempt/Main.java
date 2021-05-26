@@ -1,4 +1,4 @@
-package ch.brodbeck;
+package ch.brodbeck.firstAttempt;
 
 import ch.brodbeck.solver.Box;
 

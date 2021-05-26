@@ -12,8 +12,27 @@ public class BoxContainer {
         this.placedBoxes = new ArrayList<PositionedBox>();
     }
 
+    public boolean fullBoxContainer(){
+        if (placedBoxes.size() == 11) {
+            return true;
+        }
+        return false;
+    }
+
+    public PositionedBox getPlacedBoxes(int i) {
+        return placedBoxes.get(i);
+    }
+
     public void placeBox(Box box, Point position) {
         this.placedBoxes.add(new PositionedBox(position, box));
+    }
+
+    public void deleteBox() {
+        this.placedBoxes.remove(placedBoxes.size()-1);
+    }
+
+    public int countBoxes() {
+        return this.placedBoxes.size();
     }
 
     public Point findPosition(Box box) {

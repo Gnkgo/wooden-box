@@ -1,6 +1,6 @@
-package ch.brodbeck;
+package ch.brodbeck.firstAttempt;
 
-import org.junit.Assert;
+import ch.brodbeck.firstAttempt.CoordinateSystem;
 import org.junit.Test;
 
 public class PlaceBoxTest {

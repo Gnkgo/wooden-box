@@ -1,5 +1,5 @@
-package ch.brodbeck;
-import static ch.brodbeck.CoordinateSystem.Boxes;
+package ch.brodbeck.firstAttempt;
+import static ch.brodbeck.firstAttempt.CoordinateSystem.Boxes;
 
 public class Collision extends RotateBox {
 

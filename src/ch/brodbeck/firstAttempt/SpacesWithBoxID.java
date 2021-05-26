@@ -1,6 +1,6 @@
-package ch.brodbeck;
-import static ch.brodbeck.CoordinateSystem.Boxes;
-import static ch.brodbeck.CoordinateSystem.coordinate;
+package ch.brodbeck.firstAttempt;
+import static ch.brodbeck.firstAttempt.CoordinateSystem.Boxes;
+import static ch.brodbeck.firstAttempt.CoordinateSystem.coordinate;
 
 public class SpacesWithBoxID {
     public boolean checkSpacesWithBoxID(int boxID) {

@@ -1,6 +1,5 @@
-package ch.brodbeck;
-import static ch.brodbeck.CoordinateSystem.Boxes;
-import static ch.brodbeck.CoordinateSystem.coordinate;
+package ch.brodbeck.firstAttempt;
+import static ch.brodbeck.firstAttempt.CoordinateSystem.coordinate;
 
 public class DeleteBox extends SpacesWithBoxID{
     public int[][][] deleteBox(int boxID) {

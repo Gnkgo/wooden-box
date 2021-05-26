@@ -1,5 +1,6 @@
-package ch.brodbeck;
+package ch.brodbeck.firstAttempt;
 
+import ch.brodbeck.firstAttempt.CoordinateSystem;
 import org.junit.Test;
 
 public class DeleteBoxTest {
