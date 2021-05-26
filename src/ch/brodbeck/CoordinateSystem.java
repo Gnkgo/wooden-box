@@ -1,7 +1,7 @@
 package ch.brodbeck;
+import ch.brodbeck.solver.Box;
+
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class CoordinateSystem extends Collision {
     public static int[][][] coordinate = new int[10][7][5];

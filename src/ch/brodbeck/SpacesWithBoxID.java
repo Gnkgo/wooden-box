@@ -4,9 +4,9 @@ import static ch.brodbeck.CoordinateSystem.coordinate;
 
 public class SpacesWithBoxID {
     public boolean checkSpacesWithBoxID(int boxID) {
-        return (emptySpacesCount()[0] > Boxes[boxID].width) &&
-                (emptySpacesCount()[1] > Boxes[boxID].length) &&
-                (emptySpacesCount()[2] > Boxes[boxID].height);
+        return (emptySpacesCount()[0] > Boxes[boxID].getWidth()) &&
+                (emptySpacesCount()[1] > Boxes[boxID].getLength()) &&
+                (emptySpacesCount()[2] > Boxes[boxID].getHeight());
     }
 
     public int[] emptySpacesCount() {

@@ -1,5 +1,7 @@
 package ch.brodbeck;
 
+import ch.brodbeck.solver.Box;
+
 public class Main {
     public static Box TargetBox = new Box(50, 35, 25);
     public static Box[] Boxes = new Box[] {
