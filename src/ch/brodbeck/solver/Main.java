@@ -2,6 +2,7 @@ package ch.brodbeck.solver;
 import ch.brodbeck.solver.Box;
 
 import javax.swing.text.Position;
+import java.util.Iterator;
 
 public class Main {
     private static BoxContainer boxContainer = new BoxContainer(new Box(10, 7, 5));
@@ -25,20 +26,25 @@ public class Main {
 
     public static void main(String[] args) {
         while (!boxContainer.fullBoxContainer()) {
-            for (int i = 0; i < 11; i++) {
-                if (boxContainer.findPosition((boxes[i])) == null) {
+            for (int newBoxes = 0; newBoxes < 11; newBoxes++) {
+                if (boxContainer.findPosition((boxes[newBoxes])) == null) {
                     boxContainer.deleteBox();
-                    i -= 1;
                     continue;
                 } //what if more than one box has to be deleted?
-                Point position = boxContainer.findPosition(boxes[i]);
-                for (int j = 0; j < boxContainer.countBoxes(); j++) {
-                    if (new PositionedBox(position, boxes[i]).collidesWith(boxContainer.getPlacedBoxes(i))){
-                        boxes[i].getAllRotations();
+                Point position = boxContainer.findPosition(boxes[newBoxes]);
+                for (int existingBoxes = 0; existingBoxes < boxContainer.countBoxes(); existingBoxes++) {
+                    if (new PositionedBox(position, boxes[newBoxes]).collidesWith(boxContainer.getPlacedBoxes(existingBoxes))){
+                        Iterator <Box> itr = boxes[newBoxes].getAllRotations().iterator();
+                        while (itr.hasNext()) {
+                            if (new PositionedBox(position, itr).collidesWith(boxContainer.getPlacedBoxes(existingBoxes));
+                        }
+
+
+
                         // use the new rotation
                     }
                 }
-                boxContainer.placeBox(boxes[i], boxContainer.findPosition(boxes[i]));
+                boxContainer.placeBox(boxes[newBoxes], boxContainer.findPosition(boxes[newBoxes]));
                 // if nothing happened --> place it
             }
         }

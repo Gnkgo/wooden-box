@@ -34,7 +34,7 @@ public class Box {
 
     @SuppressWarnings("SuspiciousNameCombination")
     public Set<Box> getAllRotations() {
-        Set<Box> hashSet = new HashSet<Box>();
+        Set<Box> hashSet = new HashSet<>();
         hashSet.add(new Box(length, width, height));
         hashSet.add(new Box(length, height, width));
         hashSet.add(new Box(height, width, length));
