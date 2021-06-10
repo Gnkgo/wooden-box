@@ -1,5 +1,4 @@
 package ch.brodbeck.solver;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -7,7 +6,7 @@ import java.util.Set;
 public class Box {
 
     private int length; //attribute
-    private int width;
+    private int width; //test
     private int height;
 
     public Box(int length, int width, int height) {
