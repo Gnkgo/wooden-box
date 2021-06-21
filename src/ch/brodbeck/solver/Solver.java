@@ -1,7 +1,5 @@
 package ch.brodbeck.solver;
 
-import java.util.Iterator;
-
 public class Solver {
     BoxContainer boxContainer = new BoxContainer(new Box(10, 7, 5));
     Box[] boxes = new Box[]{
@@ -21,37 +19,42 @@ public class Solver {
             new Box(7, 4, 2)
     };
 
+
     public void solve() {
+        int [] placedBoxes = new int [boxes.length];
+        int counter  = 0;
+        int newBoxes = 0;
+        // do as long as the box is not full yet
         while (!boxContainer.fullBoxContainer()) {
-            int newBoxes = 0;
+            //when there is a position for a new box then:
             if (boxContainer.findPosition((boxes[newBoxes])) != null) {
                 Point position = boxContainer.findPosition(boxes[newBoxes]);
+                // if new box does collide with something:
                 for (int existingBoxes = 0; existingBoxes < boxContainer.countBoxes(); existingBoxes++) {
                     if (new PositionedBox(position, boxes[newBoxes]).collidesWith(boxContainer.getPlacedBoxes(existingBoxes))) {
-                        //todo
-                        //when the position is colliding with an already existing box, try the rotations, if this doesn't work, go to the last working box
-                        // things to do:
-                        // 1) iterators are wrong, how to iterate through all elements
-                        // 2) look at the different loops
-                        // 3) get solution, if it doesn't collide --> second step, find out where/which method to use for the recursion
-                        for (Iterator<Box> it = boxes[newBoxes].getAllRotations().iterator(); it.hasNext(); ) {
-                            Box rotatedBox = it.next();
-                            if (!new PositionedBox(position, boxes[newBoxes]).collidesWith(boxContainer.getPlacedBoxes(existingBoxes)))
-                                boxContainer.placeBox(boxes[newBoxes], boxContainer.findPosition(boxes[newBoxes]));
-                            Iterator <Box> rotatedBox = boxes[newBoxes].getAllRotations().iterator();
-                            rotatedBox.next();
-                            //with iterator --> iterate through hashset
-                            boxes[newBoxes] = (Box) rotatedBox;
-                            //if it does collide, try next rotated box
-                        }
-                    } else {
+                        // try the rotations
+                        for (Box rotatedBox : boxes[newBoxes].getAllRotations()) {
+                            for (int i = 0; i < boxContainer.countBoxes(); i++) {
+                                // if rotation collides, try next rotation
+                                if (new PositionedBox(position, rotatedBox).collidesWith(boxContainer.getPlacedBoxes(i))) {
+                                    break;
+                                    }
+                                }
+                            }
+                        // if one rotatedBox doesn't collide, it will reach this line
                         boxContainer.placeBox(boxes[newBoxes], boxContainer.findPosition(boxes[newBoxes]));
-                    }
+                        counter++;
+                        newBoxes++;
+                        }
+                    //todo: problem with remembering the right boxes --> placing two identical boxes are not possible!
                 }
+                boxContainer.placeBox(boxes[newBoxes], boxContainer.findPosition(boxes[newBoxes]));
             }
             // when no place is found
             else {
-                //todo
+                boxContainer.deleteBox();
+                counter++;
+                newBoxes++;
                 //recursion back to the last possible box and try from there
             }
         }
