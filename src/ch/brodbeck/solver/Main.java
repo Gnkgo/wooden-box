@@ -25,12 +25,16 @@ public class Main {
 
 
     public static void main(String[] args) {
+        int[] visitedPath = new int[boxes.length];
+        int[] usedPath = new int[boxes.length];
+        int counter = 0;
         while (!boxContainer.fullBoxContainer()) {
             outerLoop:
-            for (int newBoxes = 0; newBoxes < 11; newBoxes++) {
+            for (int newBoxes = 0; newBoxes < boxes.length; newBoxes++) {
                 // when not even a position is found
                 if (boxContainer.findPosition((boxes[newBoxes])) == null) {
                     boxContainer.deleteBox();
+                    counter--;
                     continue;
                 } // what if more than one box has to be removed?
                 Point position = boxContainer.findPosition(boxes[newBoxes]);
@@ -48,6 +52,8 @@ public class Main {
                             // if there aren't any other rotations anymore, remove box and skip this box
                             else if (!itr.hasNext()){
                                 boxContainer.deleteBox();
+                                counter--;
+                                visitedPath[newBoxes] = 1;
                                 break outerLoop;
                             }
                         }
@@ -55,6 +61,8 @@ public class Main {
                     else {
                         // if nothing happened --> place it
                         boxContainer.placeBox(boxes[newBoxes], boxContainer.findPosition(boxes[newBoxes]));
+                        counter++;
+                        usedPath[newBoxes] = 1;
                     }
                 }
             }
