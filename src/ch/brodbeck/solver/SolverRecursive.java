@@ -2,62 +2,59 @@ package ch.brodbeck.solver;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class SolverRecursive {
-    private BoxContainer boxContainer;
 
-    public SolverRecursive(BoxContainer boxContainer) {
-        this.boxContainer = boxContainer;
-    }
-
-    public ArrayList<Box> solveBox(ArrayList<Box> placedBoxes, ArrayList<Box> leftBoxes) {
-
+    public List<PositionedBox> solveBox(BoxContainer boxContainer, List<Box> leftBoxes) {
         if (leftBoxes.size() == 0) {
             // exit condition --> finish recursion
-            return placedBoxes;
+            return boxContainer.getAllPlacedBoxes();
         }
-        for (int newBoxes = 0; newBoxes < leftBoxes.size(); newBoxes++) {
-            // when not a position is found for any boxes which are left
-            if (boxContainer.findPosition(leftBoxes.get(newBoxes)) == null && newBoxes == leftBoxes.size() - 1) {
-                leftBoxes.add(placedBoxes.get(newBoxes));
-                placedBoxes.remove(placedBoxes.size() - 1);
-                boxContainer.deleteBox();
-                return solveBox(placedBoxes, leftBoxes);
-                //or return null?
-            }
-            Point position = boxContainer.findPosition(leftBoxes.get(newBoxes));
-            if (placedBoxes.size() == 0) {
-                boxContainer.placeBox(leftBoxes.get(newBoxes), boxContainer.findPosition(leftBoxes.get(newBoxes)));
-                placedBoxes.add(leftBoxes.get(newBoxes));
-                leftBoxes.remove(newBoxes);
-                return solveBox(placedBoxes, leftBoxes);
+        for (int i = 0; i < leftBoxes.size(); i++) {
+            var leftBox = leftBoxes.get(i);
 
+            // when not a position is found for any boxes which are left
+            if (boxContainer.findPosition(leftBox) == null && i == leftBoxes.size() - 1) {
+                leftBoxes.add(boxContainer.getPlacedPlainBoxes(i));
+                boxContainer.deleteBox();
+                return null;
             }
-            for (int existingBoxes = 0; existingBoxes < placedBoxes.size(); existingBoxes++) {
+            if (boxContainer.getPlacedBoxesSize() == 0) {
+                BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
+                List <Box> leftBoxes1 = new ArrayList<Box>(leftBoxes);
+                boxContainer1.placeBox(leftBox, boxContainer.findPosition(leftBox));
+                leftBoxes1.remove(i);
+                return solveBox(boxContainer1, leftBoxes1);
+            }
+            Point position = boxContainer.findPosition(leftBox);
+            for (int j = 0; j < boxContainer.getPlacedBoxesSize(); j++) {
+
                 // when the position is colliding with an already existing box, try the rotations
-                if (new PositionedBox(position, leftBoxes.get(newBoxes)).collidesWith(boxContainer.getPlacedBoxes(existingBoxes))) {
-                    for (Box box : leftBoxes.get(newBoxes).getAllRotations()) {
-                        Iterator<Box> itr = leftBoxes.get(newBoxes).getAllRotations().iterator();
+                if (new PositionedBox(position, leftBox).collidesWith(boxContainer.getPlacedBoxes(j))) {
+                    for (Box box : leftBox.getAllRotations()) {
+                        Iterator<Box> itr = leftBox.getAllRotations().iterator();
                         itr.next();
-                        if (!new PositionedBox(position, box).collidesWith(boxContainer.getPlacedBoxes(existingBoxes))) {
+                        if (!new PositionedBox(position, box).collidesWith(boxContainer.getPlacedBoxes(j))) {
                             // use the new rotation
-                            boxContainer.placeBox(leftBoxes.get(newBoxes), boxContainer.findPosition(leftBoxes.get(newBoxes)));
-                            placedBoxes.add(leftBoxes.get(newBoxes));
-                            leftBoxes.remove(newBoxes);
+                            BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
+                            List <Box> leftBoxes1 = new ArrayList<Box>(leftBoxes);
+                            boxContainer1.placeBox(leftBox, boxContainer.findPosition(leftBox));
+                            leftBoxes1.remove(i);
+                            return solveBox(boxContainer1, leftBoxes1);
                         }
                     }
-                    boxContainer.deleteBox();
-                    leftBoxes.add(placedBoxes.get(newBoxes));
-                    placedBoxes.remove(newBoxes);
                 } else {
                     // if nothing happened --> place it
-                    boxContainer.placeBox(leftBoxes.get(newBoxes), boxContainer.findPosition(leftBoxes.get(newBoxes)));
-                    placedBoxes.add(leftBoxes.get(newBoxes));
-                    leftBoxes.remove(newBoxes);
+                    BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
+                    List <Box> leftBoxes1 = new ArrayList<Box>(leftBoxes);
+                    boxContainer1.placeBox(leftBox, boxContainer.findPosition(leftBox));
+                    leftBoxes1.remove(i);
+                    return solveBox(boxContainer1, leftBoxes1);
                 }
-                return solveBox(placedBoxes, leftBoxes);
             }
         }
-        return solveBox(placedBoxes, leftBoxes);
+        return solveBox(boxContainer, leftBoxes);
     }
 }
+

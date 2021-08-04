@@ -14,13 +14,13 @@ public class SolverTest {
                 new Box(2, 2, 2),
                 new Box(3, 3, 3),
         };
-        SolverRecursive solverRecursive = new SolverRecursive(boxContainer);
-        ArrayList<Box> placedBoxes = new ArrayList<Box>();
-        ArrayList<Box> leftBoxes = new ArrayList<Box>(List.of(boxes));
-        ArrayList<Box> solution = solverRecursive.solveBox(placedBoxes, leftBoxes);
+        SolverRecursive solverRecursive = new SolverRecursive();
+        List<Box> leftBoxes = new ArrayList<Box>(List.of(boxes));
+        List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
+
         for (int i = 0; i < boxes.length; i++) {
-            System.out.println(solution.get(i));
+            System.out.println(solution.get(i).getPlainBox().toString());
         }
-        System.out.println(solution.toString());
+        System.out.println("the solution is " + solution);
     }
 }

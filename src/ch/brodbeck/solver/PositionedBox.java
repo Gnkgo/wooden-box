@@ -10,6 +10,10 @@ public class PositionedBox {
         this.box = box;
     }
 
+    public Box getPlainBox() {
+        return box;
+    }
+
     public boolean collidesWith(PositionedBox other) {
         int givenMaxX = position.getX() + box.getWidth();
         int givenMaxY = position.getY() + box.getLength();

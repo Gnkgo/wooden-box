@@ -19,8 +19,24 @@ public class BoxContainer {
         return false;
     }
 
+    public Box getTargetBox() {
+        return targetBox;
+    }
+
+    public Box getPlacedPlainBoxes(int i) {
+        return placedBoxes.get(i).getPlainBox();
+    }
+
     public PositionedBox getPlacedBoxes(int i) {
         return placedBoxes.get(i);
+    }
+
+    public List<PositionedBox> getAllPlacedBoxes() {
+        return placedBoxes;
+    }
+
+    public int getPlacedBoxesSize(){
+        return placedBoxes.size();
     }
 
     public void placeBox(Box box, Point position) {
