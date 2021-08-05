@@ -23,6 +23,60 @@ public class BoxContainerTest {
 
 
     }
+
+    @Test
+    public void testRotateBox() {
+        BoxContainer boxContainer = new BoxContainer(new Box(3, 5, 3));
+        Box[] boxes = new Box[]{
+                new Box(1, 3, 5),
+                new Box(2, 3, 4),
+                new Box(1, 2, 3),
+        };
+        Point position = boxContainer.findPosition(boxes[0]);
+        if (position == null) {
+            for (Box box : boxes[0].getAllRotations()) {
+                position = boxContainer.findPosition(box);
+                if (position != null) {
+                    // use the new rotation
+                    boxContainer.placeBox(box, position);
+                    System.out.println(boxContainer.getAllPlacedBoxes().toString());
+                    System.out.println("end 1");
+                }
+            }
+        } else {
+            System.out.println(position);
+        }
+
+        position = boxContainer.findPosition(boxes[1]);
+        if (position == null) {
+            for (Box box : boxes[1].getAllRotations()) {
+                position = boxContainer.findPosition(box);
+                if (position != null) {
+                    // use the new rotation
+                    boxContainer.placeBox(box, position);
+                    System.out.println(boxContainer.getAllPlacedBoxes().toString());
+                    System.out.println("end 2");
+                }
+            }
+        } else {
+            System.out.println(position);
+        }
+        position = boxContainer.findPosition(boxes[2]);
+        if (position == null) {
+            for (Box box : boxes[2].getAllRotations()) {
+                position = boxContainer.findPosition(box);
+                if (position != null) {
+                    // use the new rotation
+                    boxContainer.placeBox(box, position);
+                    System.out.println(boxContainer.getAllPlacedBoxes().toString());
+                    System.out.println("you reached the end");
+                }
+            }
+        } else {
+            System.out.println(position);
+        }
+
+    }
     @Test
     public void testDeleteBox() {
         BoxContainer boxContainer = new BoxContainer(new Box(10, 7, 5));

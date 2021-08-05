@@ -58,6 +58,6 @@ public class Box {
 
     @Override
     public String toString() {
-        return "Box{"+ "height=" + height + ", width=" + width + ", length=" + length +"}";
+        return "Box{"+ "length=" + length + ", width=" + width + ", height=" + height +"}";
     }
 }

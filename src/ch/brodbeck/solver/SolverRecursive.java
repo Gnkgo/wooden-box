@@ -25,7 +25,7 @@ public class SolverRecursive {
             if (boxContainer1.findPosition(leftBox) == null && i == leftBoxes1.size() - 1) {
                 leftBoxes1.add(boxContainer1.getPlacedPlainBoxes(i));
                 boxContainer1.deleteBox();
-                return null;
+                return solveBox(boxContainer1, leftBoxes1);
             }
 
             /*
@@ -43,16 +43,7 @@ public class SolverRecursive {
                 if (point == null) {
                     for (Box box : leftBox.getAllRotations()) {
                         Point position = boxContainer1.findPosition(box);
-                        if (boxContainer1.getPlacedBoxesSize() == 0) {
-                            if (position != null) {
-                                // use the new rotation
-                                boxContainer1.placeBox(box, position);
-                                leftBoxes1.remove(i);
-                                return solveBox(boxContainer1, leftBoxes1);
-                            }
-
-                        }
-                        else if (!new PositionedBox(position, box).collidesWith(boxContainer1.getPlacedBoxes(j))) {
+                        if (position != null) {
                             // use the new rotation
                             boxContainer1.placeBox(box, position);
                             leftBoxes1.remove(i);
@@ -61,18 +52,17 @@ public class SolverRecursive {
                         // when the position is colliding with an already existing box, try the rotations
                         // if nothing happened, and you checked every box --> place it
                     }
-                    //counter++;
-                    //if (counter == boxContainer.getPlacedBoxesSize()) {
-
-                    //}
                 } else {
                     boxContainer1.placeBox(leftBox, point);
                     leftBoxes1.remove(i);
                     return solveBox(boxContainer1, leftBoxes1);
                 }
             }
+
         }
-        return null;
+        leftBoxes1.add(boxContainer1.getPlacedPlainBoxes(boxContainer1.getPlacedBoxesSize()));
+        boxContainer1.deleteBox();
+        return solveBox(boxContainer1, leftBoxes1);
     }
 }
 
