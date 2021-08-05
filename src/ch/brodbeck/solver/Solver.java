@@ -22,7 +22,7 @@ public class Solver {
             new Box(7, 4, 2)
     };
 
-
+/*
     public void solve() {
         int[] placedBoxes = new int[boxes.length];
         Arrays.fill(placedBoxes, 1);
@@ -142,6 +142,8 @@ public class Solver {
             }
         }
     }
+ */
+
 }
 
 

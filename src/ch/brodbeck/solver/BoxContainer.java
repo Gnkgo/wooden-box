@@ -12,13 +12,6 @@ public class BoxContainer {
         this.placedBoxes = new ArrayList<PositionedBox>();
     }
 
-    public boolean fullBoxContainer(){
-        if (placedBoxes.size() == 11) {
-            return true;
-        }
-        return false;
-    }
-
     public Box getTargetBox() {
         return targetBox;
     }
@@ -35,6 +28,13 @@ public class BoxContainer {
         return placedBoxes;
     }
 
+    public Point getPlainPosition (int i) {
+        return placedBoxes.get(i).getPlainPoint();
+    }
+    public int countBoxes() {
+        return this.placedBoxes.size();
+    }
+
     public int getPlacedBoxesSize(){
         return placedBoxes.size();
     }
@@ -47,9 +47,6 @@ public class BoxContainer {
         this.placedBoxes.remove(placedBoxes.size()-1);
     }
 
-    public int countBoxes() {
-        return this.placedBoxes.size();
-    }
 
     public Point findPosition(Box box) {
         for (int z = 0; z < targetBox.getHeight(); z++) {
@@ -71,6 +68,10 @@ public class BoxContainer {
         return null;
         //search targetBox to find a suitable place for given box
         //when no place is found --> return null
+    }
+    public String printBox (int i) {
+        placedBoxes.get(i).getPlainBox();
+        return "hello";
     }
 
 }

@@ -55,4 +55,9 @@ public class Box {
     public int hashCode() {
         return Objects.hash(length, width, height);
     }
+
+    @Override
+    public String toString() {
+        return "Box{"+ "height=" + height + ", width=" + width + ", length=" + length +"}";
+    }
 }

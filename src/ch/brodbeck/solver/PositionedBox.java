@@ -14,6 +14,10 @@ public class PositionedBox {
         return box;
     }
 
+    public Point getPlainPoint() {
+        return position;
+    }
+
     public boolean collidesWith(PositionedBox other) {
         int givenMaxX = position.getX() + box.getWidth();
         int givenMaxY = position.getY() + box.getLength();
@@ -26,5 +30,10 @@ public class PositionedBox {
         return (position.getX() < maxX && givenMaxX > other.position.getX()) &&
                 (position.getY() < maxY && givenMaxY > other.position.getY()) &&
                 (position.getZ() < maxZ && givenMaxZ > other.position.getZ());
+    }
+
+    @Override
+    public String toString() {
+        return "Position: " + position + " " + box;
     }
 }
