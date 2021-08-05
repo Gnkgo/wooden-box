@@ -47,6 +47,16 @@ public class BoxContainer {
         this.placedBoxes.remove(placedBoxes.size()-1);
     }
 
+    public boolean outOfBox(PositionedBox attempt) {
+        if (attempt.getPlainBox().getLength() + attempt.getPlainPoint().getX() > targetBox.getLength()) {
+            return false;
+        }
+        else if (attempt.getPlainBox().getWidth() + attempt.getPlainPoint().getY() > targetBox.getWidth()) {
+            return false;
+        }
+        else return attempt.getPlainBox().getHeight() + attempt.getPlainPoint().getZ() <= targetBox.getHeight();
+    }
+
 
     public Point findPosition(Box box) {
         for (int z = 0; z < targetBox.getHeight(); z++) {
@@ -54,12 +64,16 @@ public class BoxContainer {
                 for (int x = 0; x < targetBox.getWidth(); x++) {
                     Point position = new Point(x, y, z);
                     PositionedBox attempt = new PositionedBox(position, box);
-                    if (placedBoxes.size() == 0) {
+                    if (placedBoxes.size() == 0 && outOfBox(attempt)) {
                         return position;
                     }
+                    int counter = 0;
                     for (PositionedBox placedBox : placedBoxes) {
-                        if (!attempt.collidesWith(placedBox)) {
-                            return position;
+                        if (!attempt.collidesWith(placedBox) && outOfBox(attempt)) {
+                            counter++;
+                            if (counter == placedBoxes.size()) {
+                                return position;
+                            }
                         }
                     }
                 }
@@ -69,9 +83,4 @@ public class BoxContainer {
         //search targetBox to find a suitable place for given box
         //when no place is found --> return null
     }
-    public String printBox (int i) {
-        placedBoxes.get(i).getPlainBox();
-        return "hello";
-    }
-
 }

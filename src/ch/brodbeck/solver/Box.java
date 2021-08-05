@@ -5,9 +5,9 @@ import java.util.Set;
 
 public class Box {
 
-    private int length; //attribute
-    private int width; //test
-    private int height;
+    private int length; //attribute x
+    private int width; //test y
+    private int height; // z
 
     public Box(int length, int width, int height) {
         this.length = length;
