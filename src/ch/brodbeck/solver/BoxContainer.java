@@ -16,11 +16,11 @@ public class BoxContainer {
         return targetBox;
     }
 
-    public Box getPlacedPlainBoxes(int i) {
+    public Box getPlacedPlainBox(int i) {
         return placedBoxes.get(i).getPlainBox();
     }
 
-    public PositionedBox getPlacedBoxes(int i) {
+    public PositionedBox getPlacedBox(int i) {
         return placedBoxes.get(i);
     }
 
@@ -30,9 +30,6 @@ public class BoxContainer {
 
     public Point getPlainPosition (int i) {
         return placedBoxes.get(i).getPlainPoint();
-    }
-    public int countBoxes() {
-        return this.placedBoxes.size();
     }
 
     public int getPlacedBoxesSize(){
@@ -47,7 +44,7 @@ public class BoxContainer {
         this.placedBoxes.remove(placedBoxes.size()-1);
     }
 
-    public boolean outOfBox(PositionedBox attempt) {
+    public boolean insideTheBox(PositionedBox attempt) {
         if (attempt.getPlainBox().getLength() + attempt.getPlainPoint().getX() > targetBox.getLength()) {
             return false;
         }
@@ -64,12 +61,12 @@ public class BoxContainer {
                 for (int x = 0; x < targetBox.getWidth(); x++) {
                     Point position = new Point(x, y, z);
                     PositionedBox attempt = new PositionedBox(position, box);
-                    if (placedBoxes.size() == 0 && outOfBox(attempt)) {
+                    if (placedBoxes.size() == 0 && insideTheBox(attempt)) {
                         return position;
                     }
                     int counter = 0;
                     for (PositionedBox placedBox : placedBoxes) {
-                        if (!attempt.collidesWith(placedBox) && outOfBox(attempt)) {
+                        if (!attempt.collidesWith(placedBox) && insideTheBox(attempt)) {
                             counter++;
                             if (counter == placedBoxes.size()) {
                                 return position;

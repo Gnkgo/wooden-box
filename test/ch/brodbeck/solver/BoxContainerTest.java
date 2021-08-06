@@ -88,12 +88,12 @@ public class BoxContainerTest {
         boxContainer.placeBox(a, position);
         position = boxContainer.findPosition(b);
         boxContainer.placeBox(b, position);
-        Assert.assertEquals(2, boxContainer.countBoxes());
+        Assert.assertEquals(2, boxContainer.getPlacedBoxesSize());
 
         position = boxContainer.findPosition(c);
         boxContainer.placeBox(c, position);
         boxContainer.deleteBox();
-        Assert.assertEquals(2, boxContainer.countBoxes());
+        Assert.assertEquals(2, boxContainer.getPlacedBoxesSize());
     }
     @Test
     public void outOfBoxTest() {
@@ -106,7 +106,7 @@ public class BoxContainerTest {
         };
         PositionedBox positionedBox = new PositionedBox(position, boxes[1]);
 
-        Assert.assertFalse(boxContainer.outOfBox(positionedBox));
+        Assert.assertFalse(boxContainer.insideTheBox(positionedBox));
 
 
     }

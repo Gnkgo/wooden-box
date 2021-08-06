@@ -1,7 +1,6 @@
 package ch.brodbeck.solver;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class SolverRecursive {
@@ -10,9 +9,9 @@ public class SolverRecursive {
 
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
         for (int i = 0; i < boxContainer.getPlacedBoxesSize() ; i++) {
-            boxContainer1.placeBox(boxContainer.getPlacedPlainBoxes(i), boxContainer.getPlainPosition(i));
+            boxContainer1.placeBox(boxContainer.getPlacedPlainBox(i), boxContainer.getPlainPosition(i));
         } // can I copy that easier?
-        List <Box> leftBoxes1 = new ArrayList<Box>(leftBoxes);
+        List <Box> leftBoxes1 = new ArrayList<>(leftBoxes);
 
         if (leftBoxes1.size() == 0) {
             // exit condition --> finish recursion
@@ -21,48 +20,26 @@ public class SolverRecursive {
         for (int i = 0; i < leftBoxes1.size(); i++) {
             var leftBox = leftBoxes1.get(i);
 
-            // when not a position is found for any boxes which are left
-            if (boxContainer1.findPosition(leftBox) == null && i == leftBoxes1.size() - 1) {
-                leftBoxes1.add(boxContainer1.getPlacedPlainBoxes(i));
-                boxContainer1.deleteBox();
-                return solveBox(boxContainer1, leftBoxes1);
-            }
-
-            /*
-                if (boxContainer1.getPlacedBoxesSize() == 0) {
-                boxContainer1.placeBox(leftBox, boxContainer1.findPosition(leftBox));
-                leftBoxes1.remove(i);
-                return solveBox(boxContainer1, leftBoxes1);
-            }
-             */
-
-            for (int j = 0; j < boxContainer1.getPlacedBoxesSize() || boxContainer.getPlacedBoxesSize() == 0; j++) {
-                int counter = 0;
-                Point point = boxContainer1.findPosition(leftBox);
-
-                if (point == null) {
-                    for (Box box : leftBox.getAllRotations()) {
-                        Point position = boxContainer1.findPosition(box);
-                        if (position != null) {
-                            // use the new rotation
-                            boxContainer1.placeBox(box, position);
-                            leftBoxes1.remove(i);
-                            return solveBox(boxContainer1, leftBoxes1);
-                        }
-                        // when the position is colliding with an already existing box, try the rotations
-                        // if nothing happened, and you checked every box --> place it
-                    }
-                } else {
-                    boxContainer1.placeBox(leftBox, point);
+            for (Box box : leftBox.getAllRotations()) {
+                Point position = boxContainer1.findPosition(box);
+                if (position != null) {
+                    // use the new rotation
+                    boxContainer1.placeBox(box, position);
                     leftBoxes1.remove(i);
-                    return solveBox(boxContainer1, leftBoxes1);
+                    var result = solveBox(boxContainer1, leftBoxes1);
+                    if (result != null) {
+                        return result;
+                    } else {
+                        leftBoxes1.add(box);
+                        boxContainer1.deleteBox();
+                    }
                 }
+                // when the position is colliding with an already existing box, try the rotations
+                // if nothing happened, and you checked every box --> place it
             }
-
         }
-        leftBoxes1.add(boxContainer1.getPlacedPlainBoxes(boxContainer1.getPlacedBoxesSize()));
-        boxContainer1.deleteBox();
-        return solveBox(boxContainer1, leftBoxes1);
+        // when no position is found for any boxes which are left
+        return null;
     }
 }
 
