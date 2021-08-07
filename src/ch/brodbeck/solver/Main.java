@@ -1,9 +1,7 @@
 package ch.brodbeck.solver;
-import ch.brodbeck.solver.Box;
-
-import javax.swing.text.Position;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
+
 import java.util.List;
 
 public class Main {
@@ -24,12 +22,16 @@ public class Main {
             new Box(7, 3, 2),
             new Box(7, 4, 2)
     };
-    public static ArrayList<Box> placedBoxes = new ArrayList<Box>();
-    public static ArrayList<Box> leftBoxes = new ArrayList<Box>(List.of(boxes));
-
 
     public static void main(String[] args) {
-
-
+        SolverRecursive solverRecursive = new SolverRecursive();
+        List<Box> leftBoxes = new ArrayList<Box>(Arrays.asList(boxes));
+        long start = System.currentTimeMillis();
+        List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
+        long totalTime = System.currentTimeMillis() - start;
+        for (int i = 0; i < boxes.length; i++) {
+            System.out.println(solution.get(i).toString());
+        }
+        System.out.println(totalTime);
     }
 }

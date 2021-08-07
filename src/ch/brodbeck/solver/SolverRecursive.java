@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolverRecursive {
-    Box box;
+
     public List<PositionedBox> solveBox(BoxContainer boxContainer, List<Box> leftBoxes) {
-
-
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
         for (int i = 0; i < boxContainer.getPlacedBoxes().size() ; i++) {
             boxContainer1.getPlacedBoxes().add(i, boxContainer.getPlacedBoxes().get(i));
