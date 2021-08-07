@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolverRecursive {
-
+    Box box;
     public List<PositionedBox> solveBox(BoxContainer boxContainer, List<Box> leftBoxes) {
 
+
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
-        for (int i = 0; i < boxContainer.getPlacedBoxesSize() ; i++) {
-            boxContainer1.placeBox(boxContainer.getPlacedPlainBox(i), boxContainer.getPlainPosition(i));
+        for (int i = 0; i < boxContainer.getPlacedBoxes().size() ; i++) {
+            boxContainer1.getPlacedBoxes().add(i, boxContainer.getPlacedBoxes().get(i));
+
         } // can I copy that easier?
         List <Box> leftBoxes1 = new ArrayList<>(leftBoxes);
 
         if (leftBoxes1.size() == 0) {
             // exit condition --> finish recursion
-            return boxContainer1.getAllPlacedBoxes();
+            return boxContainer1.getPlacedBoxes();
         }
         for (int i = 0; i < leftBoxes1.size(); i++) {
             var leftBox = leftBoxes1.get(i);
@@ -24,14 +26,14 @@ public class SolverRecursive {
                 Point position = boxContainer1.findPosition(box);
                 if (position != null) {
                     // use the new rotation
-                    boxContainer1.placeBox(box, position);
+                    boxContainer1.getPlacedBoxes().add(new PositionedBox(position, box));
                     leftBoxes1.remove(i);
                     var result = solveBox(boxContainer1, leftBoxes1);
                     if (result != null) {
                         return result;
                     } else {
-                        leftBoxes1.add(box);
-                        boxContainer1.deleteBox();
+                        leftBoxes1.add(boxContainer1.getPlacedBoxes().get(boxContainer1.getPlacedBoxes().size() - 1).getPlainBox());
+                        boxContainer1.getPlacedBoxes().remove(boxContainer1.getPlacedBoxes().size() -1);
                     }
                 }
                 // when the position is colliding with an already existing box, try the rotations

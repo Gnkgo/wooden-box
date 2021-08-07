@@ -13,11 +13,11 @@ public class BoxContainerTest {
         Point position = boxContainer.findPosition(a);
         Assert.assertEquals(new Point(0, 0, 0), position);
 
-        boxContainer.placeBox(a, position);
+        boxContainer.getPlacedBoxes().add(new PositionedBox(position, a));
         position = boxContainer.findPosition(b);
         Assert.assertEquals(new Point(3,0,0), position);
 
-        boxContainer.placeBox(b, position);
+        boxContainer.getPlacedBoxes().add(new PositionedBox(position, b));
         position = boxContainer.findPosition(c);
         Assert.assertEquals(new Point(4, 0, 0), position);
 
@@ -38,8 +38,8 @@ public class BoxContainerTest {
                 position = boxContainer.findPosition(box);
                 if (position != null) {
                     // use the new rotation
-                    boxContainer.placeBox(box, position);
-                    System.out.println(boxContainer.getAllPlacedBoxes().toString());
+                    boxContainer.getPlacedBoxes().add(new PositionedBox(position, box));
+                    System.out.println(boxContainer.getPlacedBoxes().toString());
                     System.out.println("end 1");
                 }
             }
@@ -53,29 +53,14 @@ public class BoxContainerTest {
                 position = boxContainer.findPosition(box);
                 if (position != null) {
                     // use the new rotation
-                    boxContainer.placeBox(box, position);
-                    System.out.println(boxContainer.getAllPlacedBoxes().toString());
+                    boxContainer.getPlacedBoxes().add(new PositionedBox(position, box));
+                    System.out.println(boxContainer.getPlacedBoxes().toString());
                     System.out.println("end 2");
                 }
             }
         } else {
             System.out.println(position);
         }
-        position = boxContainer.findPosition(boxes[2]);
-        if (position == null) {
-            for (Box box : boxes[2].getAllRotations()) {
-                position = boxContainer.findPosition(box);
-                if (position != null) {
-                    // use the new rotation
-                    boxContainer.placeBox(box, position);
-                    System.out.println(boxContainer.getAllPlacedBoxes().toString());
-                    System.out.println("you reached the end");
-                }
-            }
-        } else {
-            System.out.println(position);
-        }
-
     }
     @Test
     public void testDeleteBox() {
@@ -85,15 +70,15 @@ public class BoxContainerTest {
         Box c = new Box(1, 1, 1);
 
         Point position = boxContainer.findPosition(a);
-        boxContainer.placeBox(a, position);
+        boxContainer.getPlacedBoxes().add(new PositionedBox(position, a));
         position = boxContainer.findPosition(b);
-        boxContainer.placeBox(b, position);
-        Assert.assertEquals(2, boxContainer.getPlacedBoxesSize());
+        boxContainer.getPlacedBoxes().add(new PositionedBox(position, b));
+        Assert.assertEquals(2, boxContainer.getPlacedBoxes().size());
 
         position = boxContainer.findPosition(c);
-        boxContainer.placeBox(c, position);
-        boxContainer.deleteBox();
-        Assert.assertEquals(2, boxContainer.getPlacedBoxesSize());
+        boxContainer.getPlacedBoxes().add(new PositionedBox(position, c));
+        boxContainer.getPlacedBoxes().remove(boxContainer.getPlacedBoxes().size() - 1);
+        Assert.assertEquals(2, boxContainer.getPlacedBoxes().size());
     }
     @Test
     public void outOfBoxTest() {

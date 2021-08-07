@@ -16,32 +16,8 @@ public class BoxContainer {
         return targetBox;
     }
 
-    public Box getPlacedPlainBox(int i) {
-        return placedBoxes.get(i).getPlainBox();
-    }
-
-    public PositionedBox getPlacedBox(int i) {
-        return placedBoxes.get(i);
-    }
-
-    public List<PositionedBox> getAllPlacedBoxes() {
+    public List<PositionedBox> getPlacedBoxes(){
         return placedBoxes;
-    }
-
-    public Point getPlainPosition (int i) {
-        return placedBoxes.get(i).getPlainPoint();
-    }
-
-    public int getPlacedBoxesSize(){
-        return placedBoxes.size();
-    }
-
-    public void placeBox(Box box, Point position) {
-        this.placedBoxes.add(new PositionedBox(position, box));
-    }
-
-    public void deleteBox() {
-        this.placedBoxes.remove(placedBoxes.size()-1);
     }
 
     public boolean insideTheBox(PositionedBox attempt) {
@@ -57,8 +33,8 @@ public class BoxContainer {
 
     public Point findPosition(Box box) {
         for (int z = 0; z < targetBox.getHeight(); z++) {
-            for (int y = 0; y < targetBox.getLength(); y++) {
-                for (int x = 0; x < targetBox.getWidth(); x++) {
+            for (int y = 0; y < targetBox.getWidth(); y++) {
+                for (int x = 0; x < targetBox.getLength(); x++) {
                     Point position = new Point(x, y, z);
                     PositionedBox attempt = new PositionedBox(position, box);
                     if (placedBoxes.size() == 0 && insideTheBox(attempt)) {
