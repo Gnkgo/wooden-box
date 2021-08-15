@@ -9,7 +9,6 @@ public class SolverRecursive {
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
         for (int i = 0; i < boxContainer.getPlacedBoxes().size() ; i++) {
             boxContainer1.getPlacedBoxes().add(i, boxContainer.getPlacedBoxes().get(i));
-
         } // can I copy that easier?
         List <Box> leftBoxes1 = new ArrayList<>(leftBoxes);
 
@@ -17,9 +16,9 @@ public class SolverRecursive {
             // exit condition --> finish recursion
             return boxContainer1.getPlacedBoxes();
         }
+
         for (int i = 0; i < leftBoxes1.size(); i++) {
             var leftBox = leftBoxes1.get(i);
-
             for (Box box : leftBox.getAllRotations()) {
                 Point position = boxContainer1.findPosition(box);
                 if (position != null) {
@@ -32,6 +31,7 @@ public class SolverRecursive {
                     } else {
                         leftBoxes1.add(boxContainer1.getPlacedBoxes().get(boxContainer1.getPlacedBoxes().size() - 1).getPlainBox());
                         boxContainer1.getPlacedBoxes().remove(boxContainer1.getPlacedBoxes().size() -1);
+                        break;
                     }
                 }
                 // when the position is colliding with an already existing box, try the rotations
