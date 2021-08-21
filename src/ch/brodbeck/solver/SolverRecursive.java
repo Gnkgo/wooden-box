@@ -29,9 +29,8 @@ public class SolverRecursive {
                     if (result != null) {
                         return result;
                     } else {
-                        leftBoxes1.add(boxContainer1.getPlacedBoxes().get(boxContainer1.getPlacedBoxes().size() - 1).getPlainBox());
+                        leftBoxes1.add(i, boxContainer1.getPlacedBoxes().get(boxContainer1.getPlacedBoxes().size() - 1).getPlainBox());
                         boxContainer1.getPlacedBoxes().remove(boxContainer1.getPlacedBoxes().size() -1);
-                        break;
                     }
                 }
                 // when the position is colliding with an already existing box, try the rotations
