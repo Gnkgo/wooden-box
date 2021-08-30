@@ -9,7 +9,7 @@ public class SolverRecursive {
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
         for (int i = 0; i < boxContainer.getPlacedBoxes().size() ; i++) {
             boxContainer1.getPlacedBoxes().add(i, boxContainer.getPlacedBoxes().get(i));
-        } // can I copy that easier?
+        } // can I copy that better?
         List <Box> leftBoxes1 = new ArrayList<>(leftBoxes);
 
         if (leftBoxes1.size() == 0) {

@@ -47,6 +47,8 @@ public class BoxContainer {
                             if (counter == placedBoxes.size()) {
                                 return position;
                             }
+                        } else {
+                            break;
                         }
                     }
                 }
