@@ -32,6 +32,7 @@ public class Main {
         for (int i = 0; i < boxes.length; i++) {
             System.out.println(solution.get(i).toString());
         }
-        System.out.println(totalTime);
+        long totalTimeMinutes = totalTime / 1000 / 60;
+        System.out.println("The solver had " + totalTimeMinutes + " minutes or " + totalTimeMinutes / 60 + " hours to solve the box.");
     }
 }

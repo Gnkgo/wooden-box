@@ -32,17 +32,17 @@ public class BoxContainer {
 
 
     public Point findPosition(Box box) {
-        for (int z = 0; z < targetBox.getHeight(); z++) {
-            for (int y = 0; y < targetBox.getWidth(); y++) {
-                for (int x = 0; x < targetBox.getLength(); x++) {
+        for (int z = 0; z <= targetBox.getHeight() - box.getHeight(); z++) {
+            for (int y = 0; y <= targetBox.getWidth() - box.getWidth(); y++) {
+                for (int x = 0; x <= targetBox.getLength() - box.getLength(); x++) {
                     Point position = new Point(x, y, z);
                     PositionedBox attempt = new PositionedBox(position, box);
-                    if (placedBoxes.size() == 0 && insideTheBox(attempt)) {
+                    if (placedBoxes.size() == 0) {
                         return position;
                     }
                     int counter = 0;
                     for (PositionedBox placedBox : placedBoxes) {
-                        if (!attempt.collidesWith(placedBox) && insideTheBox(attempt)) {
+                        if (!attempt.collidesWith(placedBox)) {
                             counter++;
                             if (counter == placedBoxes.size()) {
                                 return position;
