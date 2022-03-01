@@ -15,8 +15,9 @@ public class SolverTest {
                 new Box(2, 2, 2),
                 new Box(3, 3, 3),
         };
-        SolverRecursive solverRecursive = new SolverRecursive();
+
         List<Box> leftBoxes = new ArrayList<Box>(Arrays.asList(boxes));
+        SolverRecursive solverRecursive = new SolverRecursive(boxContainer, leftBoxes);
         List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
 
         for (int i = 0; i < boxes.length; i++) {
@@ -31,8 +32,9 @@ public class SolverTest {
                 new Box(2, 3, 4),
                 new Box(1, 2, 3),
         };
-        SolverRecursive solverRecursive = new SolverRecursive();
+
         List<Box> leftBoxes = new ArrayList<Box>(Arrays.asList(boxes));
+        SolverRecursive solverRecursive = new SolverRecursive(boxContainer, leftBoxes);
         long start = System.currentTimeMillis();
         List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
         long totalTime = System.currentTimeMillis() - start;
@@ -65,8 +67,9 @@ public class SolverTest {
 
         };
 
-            SolverRecursive solverRecursive = new SolverRecursive();
+
             List<Box> leftBoxes = new ArrayList<Box>(Arrays.asList(boxes));
+        SolverRecursive solverRecursive = new SolverRecursive(boxContainer, leftBoxes);
             long start = System.currentTimeMillis();
             List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
             long totalTime = System.currentTimeMillis() - start;
