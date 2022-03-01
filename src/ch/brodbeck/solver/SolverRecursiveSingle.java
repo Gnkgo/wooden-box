@@ -3,15 +3,7 @@ package ch.brodbeck.solver;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolverRecursive implements Runnable {
-    BoxContainer boxContainer;
-    List<Box> leftBoxes;
-    List<PositionedBox> solution;
-
-    public SolverRecursive (BoxContainer boxContainer, List<Box> leftBoxes) {
-        this.boxContainer = boxContainer;
-        this.leftBoxes = leftBoxes;
-    }
+public class SolverRecursiveSingle  {
 
     public List<PositionedBox> solveBox(BoxContainer boxContainer, List<Box> leftBoxes) {
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
@@ -49,19 +41,5 @@ public class SolverRecursive implements Runnable {
         return null;
     }
 
-
-    @Override
-    public void run() {
-        long start = System.currentTimeMillis();
-        solution = solveBox(boxContainer, leftBoxes);
-
-        long totalTime = System.currentTimeMillis() - start;
-
-        for (PositionedBox positionedBox : solution) {
-            System.out.println(positionedBox.toString());
-        }
-        long totalTimeSeconds = totalTime / 1000;
-        System.out.println("The solver had " + totalTimeSeconds + " seconds or " + totalTimeSeconds / 60  + " minutes to solve the box.");
-    }
 }
 
