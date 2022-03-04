@@ -26,24 +26,15 @@ public class Main {
 
     };
 
+
     public static void main(String[] args) {
         List<ArrayList<Box>> collect = new ArrayList<>();
         List<Box> toShuffle = Arrays.asList(boxes);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
-        Collections.shuffle(toShuffle);
-        collect.add(new ArrayList<Box>(toShuffle));
+
+        for (int i = 0; i < 8; i++) {
+            collect.add(new ArrayList<>(toShuffle));
+            Collections.shuffle(toShuffle);
+        }
 
         //List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
 
@@ -51,8 +42,6 @@ public class Main {
             SolverRecursive solverRecursive1 = new SolverRecursive(boxContainer, collect.get(i));
             Thread thread = new Thread(solverRecursive1);
             thread.start();
-
         }
-
     }
 }
