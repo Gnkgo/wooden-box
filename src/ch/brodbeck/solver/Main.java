@@ -29,19 +29,24 @@ public class Main {
 
     public static void main(String[] args) {
         List<ArrayList<Box>> collect = new ArrayList<>();
-        List<Box> toShuffle = Arrays.asList(boxes);
+        List<Box> toShuffleCopy = Arrays.asList(boxes);
+        List<Box> toShuffle = new ArrayList<>(toShuffleCopy);
 
-        for (int i = 0; i < 8; i++) {
-            collect.add(new ArrayList<>(toShuffle));
+        for (int i = 0; i < 11; i++) {
             Collections.shuffle(toShuffle);
+            toShuffle.remove(boxes[i]);
+            toShuffle.add(0, boxes[i]);
+            collect.add(new ArrayList<>(toShuffle));
+            System.out.println(toShuffle);
         }
 
         //List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 11; i++) {
             SolverRecursive solverRecursive1 = new SolverRecursive(boxContainer, collect.get(i));
             Thread thread = new Thread(solverRecursive1);
             thread.start();
         }
     }
+
 }
