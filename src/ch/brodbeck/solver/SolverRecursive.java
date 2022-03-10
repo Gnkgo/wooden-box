@@ -7,7 +7,7 @@ public class SolverRecursive implements Runnable {
     BoxContainer boxContainer;
     List<Box> leftBoxes;
     List<PositionedBox> solution;
-    Object lock;
+    final Object lock;
 
     public SolverRecursive(BoxContainer boxContainer, List<Box> leftBoxes, Object lock) {
         this.boxContainer = boxContainer;
@@ -64,8 +64,9 @@ public class SolverRecursive implements Runnable {
         }
         long totalTimeSeconds = totalTime / 1000;
         System.out.println("The solver had " + totalTimeSeconds + " seconds or " + totalTimeSeconds / 60 + " minutes to solve the box.");
-        lock.notify();
-
+        synchronized (lock) {
+            lock.notify();
+        }
     }
 }
 

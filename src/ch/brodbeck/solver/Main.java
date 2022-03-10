@@ -42,7 +42,6 @@ public class Main {
             collect.add(new ArrayList<>(toShuffle));
             System.out.println(toShuffle);
         }
-
         Object lock = new Object();
         Thread[] threads = new Thread[11];
         for (int i = 0; i < 11; i++) {
@@ -50,7 +49,6 @@ public class Main {
             threads[i] = new Thread(solverRecursive1);
             threads[i].start();
         }
-
 
         synchronized (lock) {
             try {
@@ -64,8 +62,5 @@ public class Main {
                 throw new InterruptedException();
             }
         }
-
-
     }
-
 }
