@@ -7,18 +7,20 @@ public class SolverRecursive implements Runnable {
     BoxContainer boxContainer;
     List<Box> leftBoxes;
     List<PositionedBox> solution;
+    Object lock;
 
-    public SolverRecursive (BoxContainer boxContainer, List<Box> leftBoxes) {
+    public SolverRecursive(BoxContainer boxContainer, List<Box> leftBoxes, Object lock) {
         this.boxContainer = boxContainer;
         this.leftBoxes = leftBoxes;
+        this.lock = lock;
     }
 
     public List<PositionedBox> solveBox(BoxContainer boxContainer, List<Box> leftBoxes) {
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
-        for (int i = 0; i < boxContainer.getPlacedBoxes().size() ; i++) {
+        for (int i = 0; i < boxContainer.getPlacedBoxes().size(); i++) {
             boxContainer1.getPlacedBoxes().add(i, boxContainer.getPlacedBoxes().get(i));
         } // can I copy that better?
-        List <Box> leftBoxes1 = new ArrayList<>(leftBoxes);
+        List<Box> leftBoxes1 = new ArrayList<>(leftBoxes);
 
         if (leftBoxes1.size() == 0) {
             // exit condition --> finish recursion
@@ -38,7 +40,7 @@ public class SolverRecursive implements Runnable {
                         return result;
                     } else {
                         leftBoxes1.add(i, boxContainer1.getPlacedBoxes().get(boxContainer1.getPlacedBoxes().size() - 1).getPlainBox());
-                        boxContainer1.getPlacedBoxes().remove(boxContainer1.getPlacedBoxes().size() -1);
+                        boxContainer1.getPlacedBoxes().remove(boxContainer1.getPlacedBoxes().size() - 1);
                     }
                 }
                 // when the position is colliding with an already existing box, try the rotations
@@ -61,7 +63,9 @@ public class SolverRecursive implements Runnable {
             System.out.println(positionedBox.toString());
         }
         long totalTimeSeconds = totalTime / 1000;
-        System.out.println("The solver had " + totalTimeSeconds + " seconds or " + totalTimeSeconds / 60  + " minutes to solve the box.");
+        System.out.println("The solver had " + totalTimeSeconds + " seconds or " + totalTimeSeconds / 60 + " minutes to solve the box.");
+        lock.notify();
+
     }
 }
 

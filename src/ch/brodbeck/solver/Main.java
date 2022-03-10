@@ -1,4 +1,6 @@
 package ch.brodbeck.solver;
+
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,10 +29,11 @@ public class Main {
     };
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         List<ArrayList<Box>> collect = new ArrayList<>();
         List<Box> toShuffleCopy = Arrays.asList(boxes);
         List<Box> toShuffle = new ArrayList<>(toShuffleCopy);
+        Thread t = Thread.currentThread();
 
         for (int i = 0; i < 11; i++) {
             Collections.shuffle(toShuffle);
@@ -40,13 +43,29 @@ public class Main {
             System.out.println(toShuffle);
         }
 
-        //List<PositionedBox> solution = solverRecursive.solveBox(boxContainer, leftBoxes);
-
+        Object lock = new Object();
+        Thread[] threads = new Thread[11];
         for (int i = 0; i < 11; i++) {
-            SolverRecursive solverRecursive1 = new SolverRecursive(boxContainer, collect.get(i));
-            Thread thread = new Thread(solverRecursive1);
-            thread.start();
+            SolverRecursive solverRecursive1 = new SolverRecursive(boxContainer, collect.get(i), lock);
+            threads[i] = new Thread(solverRecursive1);
+            threads[i].start();
         }
+
+
+        synchronized (lock) {
+            try {
+                lock.wait();
+                for (Thread thread : threads) {
+                    if (thread.isAlive()) {
+                        thread.interrupt();
+                    }
+                }
+            } catch (Exception e) {
+                throw new InterruptedException();
+            }
+        }
+
+
     }
 
 }

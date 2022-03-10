@@ -48,6 +48,7 @@ public class BoxContainer {
                                 return position;
                             }
                         } else {
+                            x = Math.max(x, placedBox.getPlainPoint().getX() + placedBox.getPlainBox().getLength());
                             break;
                         }
                     }
