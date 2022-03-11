@@ -24,10 +24,7 @@ public class Main {
             new Box(6, 3, 2),
             new Box(7, 3, 2),
             new Box(7, 4, 2)
-
-
     };
-
 
     public static void main(String[] args) throws InterruptedException {
         List<ArrayList<Box>> collect = new ArrayList<>();
@@ -50,13 +47,12 @@ public class Main {
             threads[i].start();
         }
 
-        synchronized (lock) {
+        synchronized (boxContainer) {
             try {
-                lock.wait();
+                boxContainer.wait();
                 for (Thread thread : threads) {
-                    if (thread.isAlive()) {
-                        thread.interrupt();
-                    }
+                    thread.stop();
+
                 }
             } catch (Exception e) {
                 throw new InterruptedException();
