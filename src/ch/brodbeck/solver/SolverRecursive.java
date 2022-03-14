@@ -16,6 +16,7 @@ public class SolverRecursive implements Runnable {
     }
 
     public List<PositionedBox> solveBox(BoxContainer boxContainer, List<Box> leftBoxes) {
+        System.out.println(Thread.currentThread().getId());
         BoxContainer boxContainer1 = new BoxContainer(boxContainer.getTargetBox());
         for (int i = 0; i < boxContainer.getPlacedBoxes().size(); i++) {
             boxContainer1.getPlacedBoxes().add(i, boxContainer.getPlacedBoxes().get(i));
@@ -30,7 +31,7 @@ public class SolverRecursive implements Runnable {
         for (int i = 0; i < leftBoxes1.size(); i++) {
             var leftBox = leftBoxes1.get(i);
             for (Box box : leftBox.getAllRotations()) {
-                Point position = boxContainer1.findPosition(box);
+                 Point position = boxContainer1.findPosition(box);
                 if (position != null) {
                     // use the new rotation
                     boxContainer1.getPlacedBoxes().add(new PositionedBox(position, box));
