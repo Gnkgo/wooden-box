@@ -15,7 +15,7 @@ public class Solver {
     }
 
     //check if the box is placeable --> is it inside the box? does any other box collide with the current one?
-    public boolean placeable(int x, int y, int z, int[] box) {
+    private boolean placeable(int x, int y, int z, int[] box) {
         for (int i = x; i < x + box[0]; i++) {
             for (int j = y; j < y + box[1]; j++) {
                 for (int k = z; k < z + box[2]; k++) {
@@ -29,7 +29,7 @@ public class Solver {
         return true;
     }
 
-    public void removeBox(int x, int y, int z, int[] box) {
+    private void removeBox(int x, int y, int z, int[] box) {
         for (int i = x; i < x + box[0]; i++) {
             for (int j = y; j < y + box[1]; j++) {
                 for (int k = z; k < z + box[2]; k++) {
@@ -39,7 +39,7 @@ public class Solver {
         }
     }
 
-    public void placeBox(int x, int y, int z, int[] box) {
+    private void placeBox(int x, int y, int z, int[] box) {
         for (int i = x; i < x + box[0]; i++) {
             for (int j = y; j < y + box[1]; j++) {
                 for (int k = z; k < z + box[2]; k++) {
@@ -50,7 +50,7 @@ public class Solver {
     }
 
     //first occurrence of a false
-    public int[] findPos() {
+    private int[] findPos() {
         for (int i = 0; i < boxContainer.length; i++) {
             for (int j = 0; j < boxContainer[0].length; j++) {
                 for (int k = 0; k < boxContainer[0][0].length; k++) {
@@ -65,7 +65,7 @@ public class Solver {
     }
 
     //put all rotation in a hashset TODO: check if I need an override equal method for the hashset --> array as an object
-    public Set<int[]> getAllRotations(int box) {
+    private Set<int[]> getAllRotations(int box) {
         Set<int[]> hashSet = new HashSet<>();
         hashSet.add(new int[]{boxes[box][0], boxes[box][1], boxes[box][2]});
         hashSet.add(new int[]{boxes[box][0], boxes[box][2], boxes[box][1]});
@@ -77,9 +77,7 @@ public class Solver {
     }
 
     public void solve() {
-        System.out.println("Recursion start");
         solve(0);
-        System.out.println("Finished");
     }
 
     private boolean solve(int numBox) {
