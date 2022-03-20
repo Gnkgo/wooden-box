@@ -1,9 +1,4 @@
 package ch.brodbeck.fastSolver;
-
-import ch.brodbeck.solver.Box;
-import ch.brodbeck.solver.BoxContainer;
-import ch.brodbeck.solver.Point;
-import ch.brodbeck.solver.PositionedBox;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -52,6 +47,15 @@ public class SolverTest {
     @Test
     public void checkSolver() {
         int[][] boxes = createSortedBoxes();
+        boolean[][][] boxContainer = new boolean[10][7][5];
+        boolean[] used = new boolean[11];
+        Solver solver = new Solver(boxes, boxContainer, used);
+        solver.solve();
+    }
+
+    @Test
+    public void checkBigSolver() {
+        int[][] boxes = createBoxes();
         boolean[][][] boxContainer = new boolean[10][7][5];
         boolean[] used = new boolean[11];
         Solver solver = new Solver(boxes, boxContainer, used);

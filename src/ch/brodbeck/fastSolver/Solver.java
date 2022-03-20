@@ -1,6 +1,5 @@
 package ch.brodbeck.fastSolver;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ public class Solver {
     public int[][] boxes;
     public boolean[] used;
 
-    public Solver(int[][] boxes, boolean[][][] boxContainer, boolean used[] ) {
+    public Solver(int[][] boxes, boolean[][][] boxContainer, boolean[] used) {
         this.boxContainer = boxContainer;
         this.boxes = boxes;
         this.used = used;
@@ -54,14 +53,10 @@ public class Solver {
         int[] pos = findPos();
 
         for (int i = 0; i < boxes.length; i++) {
-            if (used[i]) {
+            if (used[i] || pos == null) {
                 continue;
             }
             Set<int[]> comb = getAllRotations(i);
-
-            if (pos == null) {
-                continue;
-            }
             int x = pos[0];
             int y = pos[1];
             int z = pos[2];
