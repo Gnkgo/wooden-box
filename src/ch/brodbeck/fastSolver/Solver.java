@@ -3,10 +3,11 @@ package ch.brodbeck.fastSolver;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO: what is a record?
 public class Solver {
-    public boolean[][][] boxContainer;
-    public int[][] boxes;
-    public boolean[] used;
+    private final boolean[][][] boxContainer;
+    private final int[][] boxes;
+    private final boolean[] used;
 
     public Solver(int[][] boxes, boolean[][][] boxContainer, boolean[] used) {
         this.boxContainer = boxContainer;
